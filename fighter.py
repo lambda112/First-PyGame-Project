@@ -4,7 +4,7 @@ class Fighter():
     def __init__(self, x, y) -> None:
         self.rect = pygame.Rect((x,y, 80, 100))
 
-    def move(self):
+    def move(self, screen_width):
         SPEED = 10
         dx = 0
         dy = 0
@@ -17,6 +17,12 @@ class Fighter():
             dx = -SPEED
         if key[pygame.K_d]:
             dx = SPEED 
+
+        # Ensure Player On Screen
+        if self.rect.left + dx < 0:
+            dx = -self.rect.left
+        elif self.rect.right + dx > screen_width:
+            dx = screen_width - self.rect.right
 
         # Update Player Position
         self.rect.x += dx
